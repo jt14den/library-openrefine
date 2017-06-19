@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="last-modified" content="2017-06-18 19:48:36 -0700">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- meta "search-domain" used for google site search function google_search() -->
+    <meta name="search-domain" value="/swc-releases/2017.06/library-openrefine">
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/lesson.css" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon-lc.ico" />
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+    <title>Library Carpentry OpenRefine: Transformations</title>
+  </head>
+  <body>
+    <div class="container">
+      
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      
+      
+
+      
+      <a class="navbar-brand" href="../">Home</a>
+
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+	
+        <li><a href="../conduct/">Code of Conduct</a></li>
+
+	
+        
+        <li><a href="../setup/">Setup</a></li>
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Episodes <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            
+            <li><a href="../01-introduction/">Introduction to OpenRefine</a></li>
+            
+            <li><a href="../02-importing-data/">Importing data into OpenRefine</a></li>
+            
+            <li><a href="../03-working-with-data/">Layout of OpenRefine, Rows vs Records</a></li>
+            
+            <li><a href="../04-faceting-and-filtering/">Faceting and filtering</a></li>
+            
+            <li><a href="../05-clustering/">Clustering</a></li>
+            
+            <li><a href="../06-working-with-columns/">Working with columns and sorting</a></li>
+            
+            <li><a href="../07-using-transformations/">Transformations</a></li>
+            
+            <li><a href="../08-looking-up-data/">Advanced OpenRefine functions</a></li>
+            
+	    <li role="separator" class="divider"></li>
+            <li><a href="../aio/">All in one page (Beta)</a></li>
+          </ul>
+        </li>
+	
+
+	
+	
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Extras <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../reference/">Reference</a></li>
+            
+            <li><a href="../about/">About</a></li>
+            
+            <li><a href="../discuss/">Discussion</a></li>
+            
+            <li><a href="../figures/">Figures</a></li>
+            
+            <li><a href="../guide/">Instructors' Guide</a></li>
+            
+          </ul>
+        </li>
+	
+
+	
+        <li><a href="../license/">License</a></li>
+	
+	<li><a href="/edit/gh-pages/_episodes/07-using-transformations.md">Improve this page <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></li>
+	
+      </ul>
+      <form class="navbar-form navbar-right" role="search" id="search" onsubmit="google_search(); return false;">
+        <div class="form-group">
+          <input type="text" id="google-search" placeholder="Search..." aria-label="Google site search">
+        </div>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../06-working-with-columns/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+    <h3 class="maintitle"><a href="../">Library Carpentry OpenRefine</a></h3>
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../08-looking-up-data/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+<article>
+<div class="row">
+  <div class="col-md-1">
+  </div>
+  <div class="col-md-10">
+    <h1 class="maintitle">Transformations</h1>
+  </div>
+  <div class="col-md-1">
+  </div>
+</div>
+
+
+<blockquote class="objectives">
+  <h2>Overview</h2>
+
+  <div class="row">
+    <div class="col-md-3">
+      <strong>Teaching:</strong> 20 min
+      <br/>
+      <strong>Exercises:</strong> 40 min
+    </div>
+    <div class="col-md-9">
+      <strong>Questions</strong>
+      <ul>
+	
+	<li><p>How do I use transformations to programmatically edit my data?</p>
+</li>
+	
+	<li><p>How do I use GREL, the General Refine Expression Language?</p>
+</li>
+	
+	<li><p>How do I save and reuse a set of operations for use in subsequent projects?</p>
+</li>
+	
+	<li><p>What are the data formats supported by OpenRefine and why should I care?</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9">
+      <strong>Objectives</strong>
+      <ul>
+	
+	<li><p>Introduce common transformations</p>
+</li>
+	
+	<li><p>Introduce GREL, the General Refine Expression Language</p>
+</li>
+	
+	<li><p>Explain how to write one’s own transformations using GREL</p>
+</li>
+	
+	<li><p>Explain how to use Undo and Redo to retrace ones’ steps</p>
+</li>
+	
+	<li><p>Explain how to use Extract and Apply to reuse a set of operations</p>
+</li>
+	
+	<li><p>Introduce data formats</p>
+</li>
+	
+	<li><p>Introduce Boolean values and arrays, and how to run transformations based on them</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+</blockquote>
+
+<h2 id="transforming-data">Transforming data</h2>
+
+<h3 id="introducing-transformations">Introducing Transformations</h3>
+
+<p>Through facets, filters and clusters OpenRefine offers relatively straightforward ways of getting an overview of your data, and making changes where you want to standardise terms used to a common set of values.</p>
+
+<p>However, sometimes there will be changes you want to make to the data that cannot be achieved in this way. Such types of changes include:</p>
+
+<ul>
+  <li>Splitting data that is in a single column into multiple columns (e.g. splitting an address into multiple parts)</li>
+  <li>Standardising the format of data in a column without changing the values (e.g. removing punctuation or standardising a date format)</li>
+  <li>Extracting a particular type of data from a longer text string (e.g. finding ISBNs in a bibliographic citation)</li>
+</ul>
+
+<p>To support this type of activity OpenRefine supports ‘Transformations’ which are ways of manipulating data in columns. Transformations are normally written in a special language called ‘GREL’ (Google Refine Expression Language). To some extent GREL expressions are similar to Excel Formula, although they tend to focus on text manipulations rather than numeric functions.</p>
+
+<p>Full documentation for the GREL is available at <a href="https://github.com/OpenRefine/OpenRefine/wiki/General-Refine-Expression-Language">https://github.com/OpenRefine/OpenRefine/wiki/General-Refine-Expression-Language</a>. This tutorial covers only a small subset of the commands available.</p>
+
+<h3 id="common-transformations">Common transformations</h3>
+<p>Some transformations are used regularly and are accessible directly through menu options, without having to type them directly.</p>
+
+<p>Examples of some of these common transformations are given in the table below, with their ‘GREL’ equivalents. We’ll see how to use the GREL version later in this lesson.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Common Transformation</th>
+      <th>Action</th>
+      <th>GREL expression</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>To Uppercase</td>
+      <td>Converts the current value to uppercase</td>
+      <td><code class="highlighter-rouge">value.toUppercase()</code></td>
+    </tr>
+    <tr>
+      <td>To Lowercase</td>
+      <td>Converts the current value to lowercase</td>
+      <td><code class="highlighter-rouge">value.toLowercase()</code></td>
+    </tr>
+    <tr>
+      <td>To Titlecase</td>
+      <td>Converts the current value to titlecase (i.e. each word starts with an uppercase character and all other characters are converted to lowercase)</td>
+      <td><code class="highlighter-rouge">value.toTitlecase()</code></td>
+    </tr>
+    <tr>
+      <td>Trim leading and trailing whitespace</td>
+      <td>Removes any ‘whitespace’ characters (e.g. spaces, tabs) from the start or end of the current value</td>
+      <td><code class="highlighter-rouge">value.trim()</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote class="challenge">
+  <h2 id="exercise-8-correct-publisher-data">Exercise 8: Correct Publisher data</h2>
+  <ul>
+    <li>Create a text facet on the Publisher column</li>
+    <li>Note that in the values there are two that look identical - why does this value appear twice?</li>
+    <li>On the publisher column use the dropdown menu to select ‘Edit cells-&gt;Common transforms-&gt;Trim leading and trailing whitespace’</li>
+    <li>Look at the publisher facet now - has it changed? (if it hasn’t changed try clicking the Refresh option to make sure it updates)</li>
+  </ul>
+</blockquote>
+
+<h3 id="writing-transformations">Writing transformations</h3>
+<p>To start writing transformations, select the column on which you wish to perform a transformation and choose ‘Edit cells-&gt;Transform…’. In the screen that displays you have a place to write a transformation (the ‘Expression’ box) and then the ability to Preview the effect the transformation would have on 10 rows of your data.</p>
+
+<p>The transformation you type into the ‘Expression’ box has to be a valid GREL expression. The simplest expression is simply the word ‘value’ by itself - which simply means the value that is currently in the column - that is: make no change.</p>
+
+<p>GREL functions are written by giving a value of some kind (a text string, a date, a number etc.) to a GREL function. Some GREL functions take additional parameters or options which control how the function works. GREL supports two types of syntax:</p>
+
+<ul>
+  <li>value.function(options)</li>
+  <li>function(value, options)</li>
+</ul>
+
+<p>Either is valid, and which is used is completely down to personal preference. In these notes the first syntax is used.</p>
+
+<p>Next to the ‘Preview’ option are options to view:</p>
+
+<ul>
+  <li>History - a list of transformations you’ve previously used with the option to reuse them immediately or to ‘star’ them for easy access</li>
+  <li>Starred - a list of transformations you’ve ‘starred’ via the ‘History’ view</li>
+  <li>Help - a list of all the GREL functions and brief information on how to use them</li>
+</ul>
+
+<blockquote class="challenge">
+  <h2 id="exercise-9-put-titles-into-title-case">Exercise 9: Put titles into Title Case</h2>
+  <ul>
+    <li>Facet by publisher</li>
+    <li>Select “Akshantala Enterprises” and “Society of Pharmaceutical Technocrats”
+      <ul>
+        <li>To select multiple values in the facet use the ‘Include’ link that appears to the right of the facet</li>
+      </ul>
+    </li>
+    <li>See that the Titles for these are all in uppercase</li>
+    <li>Click the dropdown menu on the Title column</li>
+    <li>Choose ‘Edit cells-&gt;Transform…’</li>
+    <li>In the Expression box type <code class="highlighter-rouge">value.toTitlecase()</code></li>
+    <li>In the Preview note that you can see what the affect of running this will be</li>
+    <li>Click ‘OK’</li>
+  </ul>
+</blockquote>
+
+<h2 id="undo-and-redo">Undo and Redo</h2>
+<p>OpenRefine lets you undo, and redo, any number of steps you have taken in cleaning the data. This means you can always try out transformations and ‘undo’ if you need to. The way OpenRefine records the steps you have taken even allows you to take the steps you’ve carried out on one data set, and apply it to another data set by a simple copy and paste operation.</p>
+
+<p>The ‘Undo’ and ‘Redo’ options are accessed via the lefthand panel.</p>
+
+<p>The Undo/Redo panel lists all the steps you’ve taken so far. To undo steps, simply click on the last step you want to preserve in the list and this will automatically undo all the changes made since that step.</p>
+
+<p>The remaining steps will continue to show in the list but greyed out, and you can reapply them by simply clicking on the last step you want to apply.</p>
+
+<p>However, if you ‘undo’ a set of steps and then start doing new transformations, the greyed out steps will disappear and you will no longer have the option to ‘redo’ these steps.</p>
+
+<p>If you wish to save a set of steps to be re-applied later, or to a different project, you can click the ‘Extract’ button. This gives you the option to select the steps you want to save, and to copy the transformations included in the selected steps in a format called ‘JSON’</p>
+
+<p>To apply a set of steps you have copied or saved in this ‘JSON’ format use the ‘Apply’ button and paste in the JSON. In this way you can share transformations between projects and each other.</p>
+
+<p>Undo/Redo data is stored with the Project and is saved automatically as you work, so next time you open the project, you can access your full history of steps you have carried out and undo/redo in exactly the same way.</p>
+
+<h2 id="exporting-data">Exporting data</h2>
+<p>Once you have finished working with a data set in OpenRefine you may wish to export it. The export options are accessed through the ‘Export’ button at the top right of the OpenRefine interface
+Export formats support include HTML, Excel and comma- and tab-separated value (csv and tsv). You can also write a custom export, selecting to export specific fields, adding a header or footer and specifying the exact format.</p>
+
+<h2 id="data-types">Data types</h2>
+<p>Understanding data types and regular expressions will help you write more complex transformations using GREL.</p>
+
+<h3 id="data-types-in-openrefine">Data types in OpenRefine</h3>
+<p>Every piece of data in OpenRefine has a ‘type’. The most common ‘type’ is a ‘string’ - that is a piece of text. However there are other data types available and transformations let you convert data from one type to another where appropriate. The data types supported are:</p>
+
+<ul>
+  <li>String</li>
+  <li>Number</li>
+  <li>Date</li>
+  <li>Boolean</li>
+  <li>Array</li>
+</ul>
+
+<h3 id="dates-and-numbers">Dates and Numbers</h3>
+<p>So far we’ve been looking only at ‘String’ type data. Much of the time it is possible to treat numbers and dates as strings. For example in the Date column we have the date of publication represented as a String. However, some operations and transformations only work on ‘number’ or ‘date’ type operations. The simplest example is sorting values in numeric or date order. To carry out these functions we need to convert the values to a date or number first.</p>
+
+<blockquote class="challenge">
+  <h2 id="exercise-10-reformat-the-date">Exercise 10: Reformat the Date</h2>
+  <ul>
+    <li>Make sure you remove all Facets and Filters</li>
+    <li>On the Date column use the dropdown menu to select ‘Edit cells-&gt;Common transforms-&gt;To date’</li>
+    <li>Note how the values are now displayed in green and follow a standard convention for their display format (ISO8601) - this indicates they are now stored as date data types in OpenRefine. We can now carry out functions that are specific to Dates</li>
+    <li>On the Date column dropdown select ‘Edit column-&gt;Add column based on this column’. Using this function you can create a new column, while preserving the old column</li>
+    <li>In the ‘New column name’ type “Formatted Date”</li>
+    <li>In the ‘Expression’ box type the GREL expression <code class="highlighter-rouge">value.toString("dd MMMM yyyy")</code></li>
+  </ul>
+</blockquote>
+
+<h3 id="booleans-and-arrays">Booleans and Arrays</h3>
+
+<p>Booleans and Arrays are data types that are more often used while manipulating data in a GREL expression than for actually storing in a cell (in fact, Arrays cannot be stored in a cell in OpenRefine).</p>
+
+<h4 id="booleans">Booleans</h4>
+<p>A ‘Boolean’ is a binary value that can either be ‘true’ or ‘false’. Boolean values can be used directly in OpenRefine cell, but is more often used in transformations as part of a GREL expression. For example the GREL expression</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>value.contains("test")
+</code></pre>
+</div>
+<p>generates a boolean value of either ‘true’ or ‘false’ depending on whether the current value in the cell contains the text ‘test’ anywhere.</p>
+
+<p>Such tests can be combined with other GREL expressions to create more complex transformations. For example, to carry out a further transformation only if a test is successful. The GREL transformation <code class="highlighter-rouge">if(value.contains("test"),"Test data",value)</code> replaces a cell value with the words “Test data” only <em>if</em> the value in the cell contains the string “test” anywhere.</p>
+
+<h4 id="arrays">Arrays</h4>
+<p>An ‘Array’ is a list of values, represented in Refine by the use of square brackets containing a list of values surrounded by inverted commas and separated by commas. For example an array listing the days of the week would look like:</p>
+
+<p>[“Monday”,”Tuesday”,”Wednesday”,”Thursday”,”Friday”,”Saturday”,”Sunday”]</p>
+
+<p>Arrays can be sorted, de-duplicated, and manipulated in other ways in GREL expressions, but cannot appear directly in an OpenRefine cell. Arrays in OpenRefine are usually the result of a transformation. For example the ‘split’ function takes a string, and changes it into an array based on a ‘separator’. For example if a cell has the value:</p>
+
+<p>“Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday”</p>
+
+<p>This can be transformed into an array using the ‘split’ function</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>value.split(",")
+</code></pre>
+</div>
+<p>This would create the array containing the days of the week:</p>
+
+<p>[“Monday”,”Tuesday”,”Wednesday”,”Thursday”,”Friday”,”Saturday”,”Sunday”]</p>
+
+<p>This can be combined with array operations like ‘sort’. For example, assuming the cell contains the same value as above, then the function</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>value.split(",").sort()
+</code></pre>
+</div>
+<p>would result in an array containing the days of the week sorted in alphabetical order:</p>
+
+<p>[“Friday”,”Monday”,”Saturday”,”Sunday”,”Thursday”,”Tuesday”,”Wednesday”]</p>
+
+<p>To output a value from an array you can either select a specific value depending on its position in the list (with the first position treated as ‘zero’). For example</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>value.split(",")[0]
+</code></pre>
+</div>
+<p>would extract the first value from the array created by the ‘split’ function. In the above example this would be “Monday”</p>
+
+<p>You can also join arrays together to make a ‘String’. The GREL expression would look like</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>value.split(",").sort().join(",")
+</code></pre>
+</div>
+<p>. Taking the above example again, this would result in a string with the days of the week in alphabetical order, listed with commas between each day.</p>
+
+<blockquote class="challenge">
+  <h2 id="exercise-11-reverse-author-names">Exercise 11: Reverse author names</h2>
+  <p>In this exercise we are going to use both the Boolean and Array data types.
+If you look at the Authors column, you can see that most of the author names are written in the natural order. However, a few have been &gt;reversed to put the family name first.</p>
+
+  <p>We can do a crude test for reversed author names by looking for those that contain a comma:</p>
+
+  <ul>
+    <li>Make sure you have already split the author names into individual cells using ‘Edit cells-&gt;Split multi-valued cells’ (you should have done this in exercise 5)</li>
+    <li>On the Authors column, use the dropdown menu and select ‘Facet-&gt;Custom text facet…’
+      <ul>
+        <li>The Custom text facet function allows you to write GREL functions to create a facet</li>
+      </ul>
+    </li>
+    <li>In the Expression box type <code class="highlighter-rouge">value.contains(",")</code></li>
+    <li>Click ‘OK’</li>
+    <li>Since the ‘contains’ function outputs a Boolean value, you should see a facet that contains ‘false’ and ‘true’. These represent the outcome of the expression, i.e. true = values containing a comma; false = values not containing a comma</li>
+    <li>In this facet select ‘true’ to narrow down to the author names that contain a comma</li>
+  </ul>
+
+  <p>Now we have narrowed down to the lines with a comma in a name, we can use the ‘match’ function. The match function allows you to use &gt;regular expressions, and output the capture groups as an array, which you can then manipulate.</p>
+
+  <ul>
+    <li>On the Authors column use the dropdown menu and select ‘Edit cells-&gt;Transform’</li>
+    <li>In the Expression box type <code class="highlighter-rouge">value.match(/(.*),(.*)/)</code>  The “/”,  means you are using a regular expression inside a GREL expression. The parentheses indicate you are going to match a group of characters. The “.*” expression will match any character from 0, 1 or more times. So here we are matching any number of characters, a comma, and another set of any number of characters.</li>
+    <li>See how this creates an array with two members in each row in the Preview column</li>
+  </ul>
+
+  <p>To get the author name in the natural order you can reverse the array and join it back together with a space to create the string you need:</p>
+
+  <ul>
+    <li>In the Expression box, add to the existing expression until it reads <code class="highlighter-rouge">value.match(/(.*),(.*)/).reverse().join(" ")</code></li>
+    <li>In the Preview view you should be able see this has reversed the array, and joined it back into a string</li>
+    <li>Click ‘OK’</li>
+  </ul>
+</blockquote>
+
+
+<blockquote class="keypoints">
+  <h2>Key Points</h2>
+  <ul>
+    
+    <li><p>You can alter data in OpenRefine based on specific instructions</p>
+</li>
+    
+    <li><p>You can expand the data editing functions that are built-in into OpenRefine by building your own</p>
+</li>
+    
+  </ul>
+</blockquote>
+
+</article>
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../06-working-with-columns/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../08-looking-up-data/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+
+      
+      
+<footer>
+  <div class="row">
+    <div class="col-md-6" align="left">
+      <h4>
+	Copyright &copy; 2016–2017
+	
+	<a href="">Library Carpentry</a>
+	
+      </h4>
+    </div>
+    <div class="col-md-6" align="right">
+      <h4>
+	
+	<a href="/edit/gh-pages/_episodes/07-using-transformations.md">Edit on GitHub</a>
+	
+	/
+	<a href="/blob/gh-pages/CONTRIBUTING.md">Contributing</a>
+	/
+	<a href="/">Source</a>
+	/
+	<a href="/blob/gh-pages/CITATION">Cite</a>
+	/
+	<a href="https://gitter.im/weaverbel/LibraryCarpentry">Contact</a>
+      </h4>
+    </div>
+  </div>
+</footer>
+
+      
+    </div>
+    
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/lesson.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-37305346-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="last-modified" content="2017-06-18 19:48:36 -0700">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- meta "search-domain" used for google site search function google_search() -->
+    <meta name="search-domain" value="/swc-releases/2017.06/library-openrefine">
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/lesson.css" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon-lc.ico" />
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+    <title>Library Carpentry OpenRefine: Faceting and filtering</title>
+  </head>
+  <body>
+    <div class="container">
+      
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      
+      
+
+      
+      <a class="navbar-brand" href="../">Home</a>
+
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+	
+        <li><a href="../conduct/">Code of Conduct</a></li>
+
+	
+        
+        <li><a href="../setup/">Setup</a></li>
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Episodes <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            
+            <li><a href="../01-introduction/">Introduction to OpenRefine</a></li>
+            
+            <li><a href="../02-importing-data/">Importing data into OpenRefine</a></li>
+            
+            <li><a href="../03-working-with-data/">Layout of OpenRefine, Rows vs Records</a></li>
+            
+            <li><a href="../04-faceting-and-filtering/">Faceting and filtering</a></li>
+            
+            <li><a href="../05-clustering/">Clustering</a></li>
+            
+            <li><a href="../06-working-with-columns/">Working with columns and sorting</a></li>
+            
+            <li><a href="../07-using-transformations/">Transformations</a></li>
+            
+            <li><a href="../08-looking-up-data/">Advanced OpenRefine functions</a></li>
+            
+	    <li role="separator" class="divider"></li>
+            <li><a href="../aio/">All in one page (Beta)</a></li>
+          </ul>
+        </li>
+	
+
+	
+	
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Extras <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../reference/">Reference</a></li>
+            
+            <li><a href="../about/">About</a></li>
+            
+            <li><a href="../discuss/">Discussion</a></li>
+            
+            <li><a href="../figures/">Figures</a></li>
+            
+            <li><a href="../guide/">Instructors' Guide</a></li>
+            
+          </ul>
+        </li>
+	
+
+	
+        <li><a href="../license/">License</a></li>
+	
+	<li><a href="/edit/gh-pages/_episodes/04-faceting-and-filtering.md">Improve this page <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></li>
+	
+      </ul>
+      <form class="navbar-form navbar-right" role="search" id="search" onsubmit="google_search(); return false;">
+        <div class="form-group">
+          <input type="text" id="google-search" placeholder="Search..." aria-label="Google site search">
+        </div>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../03-working-with-data/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+    <h3 class="maintitle"><a href="../">Library Carpentry OpenRefine</a></h3>
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../05-clustering/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+<article>
+<div class="row">
+  <div class="col-md-1">
+  </div>
+  <div class="col-md-10">
+    <h1 class="maintitle">Faceting and filtering</h1>
+  </div>
+  <div class="col-md-1">
+  </div>
+</div>
+
+
+<blockquote class="objectives">
+  <h2>Overview</h2>
+
+  <div class="row">
+    <div class="col-md-3">
+      <strong>Teaching:</strong> 10 min
+      <br/>
+      <strong>Exercises:</strong> 10 min
+    </div>
+    <div class="col-md-9">
+      <strong>Questions</strong>
+      <ul>
+	
+	<li><p>What is a facet in OpenRefine?</p>
+</li>
+	
+	<li><p>What is a filter in OpenRefine?</p>
+</li>
+	
+	<li><p>How can I use filters and facets to explore data OpenRefine?</p>
+</li>
+	
+	<li><p>How can I easily correct common data issues in my data with OpenRefine?</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9">
+      <strong>Objectives</strong>
+      <ul>
+	
+	<li><p>Explain what Facets and Filters are</p>
+</li>
+	
+	<li><p>Answer simple questions about the content of a data set using Facets</p>
+</li>
+	
+	<li><p>Use facets and filters to work with a subset of data</p>
+</li>
+	
+	<li><p>Correct simple data problems through a facet</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+</blockquote>
+
+<h2 id="facets">Facets</h2>
+<p>Facets are one of the most useful features of OpenRefine and can help both get an overview of the data in a project as well as helping you bring more consistency to the data.</p>
+
+<p>A ‘Facet’ groups all the values that appear in a column, and then allow you to filter the data by these values and edit values across many records at the same time.</p>
+
+<p>The simplest type of Facet is called a ‘Text facet’. This simply groups all the text values in a column and lists each value with the number of records it appears in. The facet information always appears in the left hand panel in the OpenRefine interface.</p>
+
+<p>To create a Text Facet for a column, click on the drop down menu at the top of the column and choose ‘Facet -&gt; Text Facet’. The facet will then appear in the left hand panel.</p>
+
+<p>The facet consists of a list of values used in the data. You can filter the data displayed by clicking on one of these headings.</p>
+
+<p>You can include multiple values from the facet in a filter at one time by using the ‘Include’ option which appears when you put your mouse over a value in the Facet.</p>
+
+<p>You can also ‘invert’ the filter to show all records which do not match your selected values. This option appears at the top of the Facet panel when you select a value from the facet to apply as a filter.</p>
+
+<blockquote class="challenge">
+  <h2 id="exercise-4-which-licences-are-used-for-articles-in-this-file">Exercise 4: Which licences are used for articles in this file?</h2>
+  <p>Use a <code class="highlighter-rouge">text facet</code> for the <code class="highlighter-rouge">license</code> column and answer these questions:</p>
+
+  <ol>
+    <li>What is the most common Licence in the file?</li>
+    <li>How many articles in the file don’t have a licence assigned?</li>
+  </ol>
+
+  <blockquote class="solution">
+    <h2 id="solution">Solution</h2>
+    <ul>
+      <li>Create a facet for the ‘Licence’ column</li>
+      <li>What is the most common Licence in the file? Answer: <code class="highlighter-rouge">CC BY</code></li>
+      <li>How many articles in the file don’t have a licence assigned? Answer: <strong>6</strong></li>
+    </ul>
+  </blockquote>
+</blockquote>
+
+<h2 id="filters">Filters</h2>
+<p>As well as using Facets to filter the data displayed in OpenRefine you can also apply ‘Text Filters’ which looks for a particular piece of text appearing in a column. Text filters are applied by clicking the drop down menu at the top of the column you want to apply the filter to and choosing ‘Text filter’.</p>
+
+<p>As with Facets, the Filter options appear in the left hand panel in OpenRefine. Simply type in the text you want to use in the Filter to display only rows which contain that text in the relevant column.</p>
+
+<p>You can also use <a href="https://data-lessons.github.io/library-data-intro/04-regular-expressions/">regular expressions</a> in the filter.</p>
+
+<h2 id="working-with-filtered-data">Working with filtered data</h2>
+<p>It is very important to note that when you have filtered the data displayed in OpenRefine, any operations you carry out will apply only to the rows that match the filter - that is the data currently being displayed.</p>
+
+<h2 id="more-on-facets">More on Facets</h2>
+<p>As well as ‘Text facets’ Refine also supports a range of other types of facet. These include:</p>
+
+<ul>
+  <li>Numeric facets</li>
+  <li>Timeline facets (for dates)</li>
+  <li>Custom facets</li>
+  <li>Scatterplot facets</li>
+</ul>
+
+<p><strong>Numeric and Timeline facets</strong> display graphs instead of lists of values. The graph includes ‘drag and drop’ controls you can use to set a start and end range to filter the data displayed.</p>
+
+<p><strong>Scatterplot facets</strong> are less commonly used - for further information on these see the tutorial at <a href="http://enipedia.tudelft.nl/wiki/OpenRefine_Tutorial#Exploring_the_data_with_scatter_plots">http://enipedia.tudelft.nl/wiki/OpenRefine_Tutorial#Exploring_the_data_with_scatter_plots</a></p>
+
+<p><strong>Custom facets</strong> are a range of different types of facets, and also allow you write your own custom facets. Some of the default custom facets are:</p>
+
+<ul>
+  <li>Word facet - this breaks down text into words and counts the number of records each word appears in</li>
+  <li>Duplicates facet - this results in a binary facet of ‘true’ or ‘false’. Rows appear in the ‘true’ facet if the value in the selected column is an exact match for a value in the same column in another row</li>
+  <li>Text length facet - creates a numeric facet based on the length (number of characters) of the text in each row for the selected column. This can be useful for spotting incorrect or unusual data in a field where specific lengths are expected (e.g. if the values are expected to be years, any row with a text length more than 4 for that column is likely to be incorrect)</li>
+  <li>Facet by blank - a binary facet of ‘true’ or ‘false’. Rows appear in the ‘true’ facet if they have no data present in that column. This is useful when looking for rows missing key data.</li>
+</ul>
+
+<p>Facets are intended to group together common values and OpenRefine limits the number of values allowed in a single facet to ensure the software does not perform slowly or run out of memory. If you create a facet where there are many unique values (for example, a facet on a ‘book title’ column in a data set that has one row per book) the facet created will be very large and may either slow down the application, or OpenRefine will not create the facet.</p>
+
+<blockquote class="challenge">
+  <h2 id="exercise-5-find-all-publications-without-a-doi">Exercise 5: Find all publications without a DOI</h2>
+  <ul>
+    <li>Use the <code class="highlighter-rouge">Facet by blank</code> function to find all publications in this data set without a DOI</li>
+  </ul>
+
+  <blockquote class="solution">
+    <h2 id="solution-1">Solution</h2>
+
+    <ol>
+      <li>On the <code class="highlighter-rouge">DOI</code> column drop down and select <code class="highlighter-rouge">Customized facets &gt; Facets by blank</code></li>
+      <li><code class="highlighter-rouge">True</code> means that it is blank, so you can:
+        <ul>
+          <li>Select <code class="highlighter-rouge">include</code> for true to winnow down the publications</li>
+        </ul>
+      </li>
+    </ol>
+  </blockquote>
+</blockquote>
+
+<h2 id="amending-data-through-facets">Amending data through facets</h2>
+<p>If you create a text facet you can edit the values in the facet to change the value for several records at the same time. To do this, simply mouse-over the value you want to edit and click the ‘edit’ option that appears.</p>
+
+<p>This approach is useful in relatively small facets where you might have small variations through punctuation or typing errors etc. For example, a column that should contain only terms from a small restricted list such as days of the week or months of the year.</p>
+
+<p>The list of values in the facet will update as you make edits.</p>
+
+<blockquote class="challenge">
+  <h2 id="exercise-6-correct-the-language-values-via-a-facet">Exercise 6: Correct the Language values via a facet</h2>
+
+  <ul>
+    <li><code class="highlighter-rouge">Text facet</code> on the <code class="highlighter-rouge">language</code> column and correct the variation in the <code class="highlighter-rouge">EN</code> and <code class="highlighter-rouge">English</code> values.</li>
+  </ul>
+
+  <blockquote class="solution">
+    <h2 id="solution-2">Solution</h2>
+    <ol>
+      <li>Create a Text facet on the Language column</li>
+      <li>Notice that there is both <code class="highlighter-rouge">EN</code> and <code class="highlighter-rouge">English</code></li>
+      <li>Put the mouse over the <code class="highlighter-rouge">English</code> value</li>
+      <li>Click <code class="highlighter-rouge">Edit</code></li>
+      <li>Type <code class="highlighter-rouge">EN</code> and click <code class="highlighter-rouge">Apply</code></li>
+      <li>See how the Language facet updates</li>
+    </ol>
+  </blockquote>
+</blockquote>
+
+
+<blockquote class="keypoints">
+  <h2>Key Points</h2>
+  <ul>
+    
+    <li><p>You can use facets and filters to explore your data</p>
+</li>
+    
+    <li><p>You can use facets and filters work with a subset of data in OpenRefine</p>
+</li>
+    
+    <li><p>You can easily correct common data issues from a Facet</p>
+</li>
+    
+  </ul>
+</blockquote>
+
+</article>
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../03-working-with-data/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../05-clustering/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+
+      
+      
+<footer>
+  <div class="row">
+    <div class="col-md-6" align="left">
+      <h4>
+	Copyright &copy; 2016–2017
+	
+	<a href="">Library Carpentry</a>
+	
+      </h4>
+    </div>
+    <div class="col-md-6" align="right">
+      <h4>
+	
+	<a href="/edit/gh-pages/_episodes/04-faceting-and-filtering.md">Edit on GitHub</a>
+	
+	/
+	<a href="/blob/gh-pages/CONTRIBUTING.md">Contributing</a>
+	/
+	<a href="/">Source</a>
+	/
+	<a href="/blob/gh-pages/CITATION">Cite</a>
+	/
+	<a href="https://gitter.im/weaverbel/LibraryCarpentry">Contact</a>
+      </h4>
+    </div>
+  </div>
+</footer>
+
+      
+    </div>
+    
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/lesson.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-37305346-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

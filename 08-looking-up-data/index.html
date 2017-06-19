@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="last-modified" content="2017-06-18 19:48:36 -0700">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- meta "search-domain" used for google site search function google_search() -->
+    <meta name="search-domain" value="/swc-releases/2017.06/library-openrefine">
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/lesson.css" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon-lc.ico" />
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+    <title>Library Carpentry OpenRefine: Advanced OpenRefine functions</title>
+  </head>
+  <body>
+    <div class="container">
+      
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      
+      
+
+      
+      <a class="navbar-brand" href="../">Home</a>
+
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+	
+        <li><a href="../conduct/">Code of Conduct</a></li>
+
+	
+        
+        <li><a href="../setup/">Setup</a></li>
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Episodes <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            
+            <li><a href="../01-introduction/">Introduction to OpenRefine</a></li>
+            
+            <li><a href="../02-importing-data/">Importing data into OpenRefine</a></li>
+            
+            <li><a href="../03-working-with-data/">Layout of OpenRefine, Rows vs Records</a></li>
+            
+            <li><a href="../04-faceting-and-filtering/">Faceting and filtering</a></li>
+            
+            <li><a href="../05-clustering/">Clustering</a></li>
+            
+            <li><a href="../06-working-with-columns/">Working with columns and sorting</a></li>
+            
+            <li><a href="../07-using-transformations/">Transformations</a></li>
+            
+            <li><a href="../08-looking-up-data/">Advanced OpenRefine functions</a></li>
+            
+	    <li role="separator" class="divider"></li>
+            <li><a href="../aio/">All in one page (Beta)</a></li>
+          </ul>
+        </li>
+	
+
+	
+	
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Extras <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../reference/">Reference</a></li>
+            
+            <li><a href="../about/">About</a></li>
+            
+            <li><a href="../discuss/">Discussion</a></li>
+            
+            <li><a href="../figures/">Figures</a></li>
+            
+            <li><a href="../guide/">Instructors' Guide</a></li>
+            
+          </ul>
+        </li>
+	
+
+	
+        <li><a href="../license/">License</a></li>
+	
+	<li><a href="/edit/gh-pages/_episodes/08-looking-up-data.md">Improve this page <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></li>
+	
+      </ul>
+      <form class="navbar-form navbar-right" role="search" id="search" onsubmit="google_search(); return false;">
+        <div class="form-group">
+          <input type="text" id="google-search" placeholder="Search..." aria-label="Google site search">
+        </div>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../07-using-transformations/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+    <h3 class="maintitle"><a href="../">Library Carpentry OpenRefine</a></h3>
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span><span class="sr-only">lesson home</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+<article>
+<div class="row">
+  <div class="col-md-1">
+  </div>
+  <div class="col-md-10">
+    <h1 class="maintitle">Advanced OpenRefine functions</h1>
+  </div>
+  <div class="col-md-1">
+  </div>
+</div>
+
+
+<blockquote class="objectives">
+  <h2>Overview</h2>
+
+  <div class="row">
+    <div class="col-md-3">
+      <strong>Teaching:</strong> 20 min
+      <br/>
+      <strong>Exercises:</strong> 10 min
+    </div>
+    <div class="col-md-9">
+      <strong>Questions</strong>
+      <ul>
+	
+	<li><p>How do I fetch data from an Application Programming Interface (API) to be used in OpenRefine?</p>
+</li>
+	
+	<li><p>How do I reconcile my data by comparing it to authoritative datasets</p>
+</li>
+	
+	<li><p>How do I install extensions for OpenRefine</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9">
+      <strong>Objectives</strong>
+      <ul>
+	
+	<li><p>Introduce how to use URLs to fetch data from the web based on what’s in an OpenRefine project</p>
+</li>
+	
+	<li><p>Introduce how to parse JSON data returned by web services</p>
+</li>
+	
+	<li><p>Introduce how to use Reconciliation services</p>
+</li>
+	
+	<li><p>Introduce OpenRefine extensions</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+</blockquote>
+
+<h2 id="looking-up-data-from-a-url">Looking up data from a URL</h2>
+
+<p>OpenRefine can retrieve data from URLs. This can be used in various ways, including looking up additional information from a remote service, based on information in your OpenRefine data.</p>
+
+<p>As an example, you can look up names against the Virtual International Authority File (VIAF), and retrieve additional information such as dates of birth/death and identifiers.</p>
+
+<p>Typically this is a two step process - firstly a step to retrieve data from a remote service, and secondly to extract the relevant information from the data you have retrieved.</p>
+
+<p>To retrieve data from an external source, from the drop down menu at a column heading use the option ‘Edit column-&gt;Add column by fetching URLs’.</p>
+
+<p>This will prompt you for a GREL expression to create a URL. Usually this would be a URL that uses existing values in your data to build a query. When the query runs OpenRefine will request each URL (for each line) and retrieve whatever data is returned (this may often be structured data, but could be simply HTML).</p>
+
+<p>The data retrieved will be stored in a cell in the new column that has been added to the project. You can then use OpenRefine transformations to extract relevant information from the data that has been retrieved. Two specific OpenRefine functions used for this are:</p>
+
+<ul>
+  <li>parseHtml()</li>
+  <li>parseJson()</li>
+</ul>
+
+<p>The ‘parseHtml()’ function can also be used to extract data from XML.</p>
+
+<p>The next exercise demonstrates this two stage process in full.</p>
+
+<blockquote class="challenge">
+  <h2 id="exercise-12-retrieving-journal-details-from-crossref-via-issn">Exercise 12: Retrieving journal details from CrossRef via ISSN</h2>
+  <p>Because retrieving data from external URLs takes time, this exercise targets a single line in the data. In reality you would want to run this over many rows (and probably go and do something else while it ran)</p>
+
+  <ul>
+    <li>Select a single row from the data set which contains an ISSN by:
+      <ul>
+        <li>Clicking the star icon for the relevant row in the first column</li>
+        <li>Facet by Star</li>
+        <li>Choose the single row</li>
+      </ul>
+    </li>
+    <li>In the ISSN column use the dropdown menu to choose ‘Edit column-&gt;Add column by fetching URLs’</li>
+    <li>Give the column a name e.g. “Journal details”</li>
+    <li>In the expression box you need to write some GREL where the output of the expression is a URL which can be used to retrieve data (the format of the data could be HTML, XML, JSON, or some other text format)</li>
+  </ul>
+
+  <p>In this case we are going to use the CrossRef api (read more about the CrossRef service at <a href="http://www.crossref.org">http://www.crossref.org</a>, read more about the API we are going to use at <a href="https://github.com/CrossRef/rest-api-doc/blob/master/rest_api.md">https://github.com/CrossRef/rest-api-doc/blob/master/rest_api.md)</a>)</p>
+
+  <p>The syntax for requesting journal information from CrossRef is <code class="highlighter-rouge">http://api.crossref.org/journals/{ISSN}</code> where {ISSN} is replaced with the ISSN of the journal</p>
+
+  <ul>
+    <li>In the expression box type the GREL <code class="highlighter-rouge">"http://api.crossref.org/journals/"+value</code></li>
+    <li>Click ‘OK’</li>
+  </ul>
+
+  <p>You should see a message at the top on the OpenRefine screen indicating it is fetching some data, and how far it has got. Wait for this to complete. Fetching data for a single row should take only ten seconds or so, but fetching data for all rows will take longer. You can speed this up by modifying the “Throttle Delay” setting in the ‘Add column by fetching URLs’ dialog which controls the delay between each URL request made by OpenRefine. This is defaulted to a rather large 5000 milliseconds (5 seconds).</p>
+
+  <p>At this point you should have a new cell containing a long text string in a format called ‘JSON’ (this stands for JavaScript Object Notation, although very rarely spelt out in full).</p>
+
+  <p>OpenRefine has a function for extracting data from JSON (sometimes referred to as ‘parsing’ the JSON). The ‘parseJson’ function is explained in more detail at <a href="https://github.com/OpenRefine/OpenRefine/wiki/GREL-Other-Functions">https://github.com/OpenRefine/OpenRefine/wiki/GREL-Other-Functions</a>.</p>
+
+  <ul>
+    <li>In the new column you’ve just added use the dropdown menu to access ‘Edit column-&gt;Add column based on this column’</li>
+    <li>Add a name for the new column e.g. “Journal Title”</li>
+    <li>In the Expression box type the GREL <code class="highlighter-rouge">value.parseJson().message.title</code></li>
+    <li>You should see in the Preview the Journal title displays</li>
+  </ul>
+
+  <p>The reason for using ‘Add column based on this column’ is simply that this allows you to retain the full JSON and extract further data from it if you need to. If you only wanted the title and did not need any other information from the JSON you could use ‘Edit cells-&gt;Transform…’ with the same GREL expression.</p>
+</blockquote>
+
+<h2 id="reconciliation-services">Reconciliation services</h2>
+<p>Reconciliation services allow you to lookup terms from your data in OpenRefine against external services, and use values from the external services in your data.</p>
+
+<p>Reconciliation services can be more sophisticated and often quicker than using the method described above to retrieve data from a URL. However, to use the ‘Reconciliation’ function in OpenRefine requires the external resource to support the necessary service for OpenRefine to work with, which means unless the service you wish to use supports such a service you cannot use the ‘Reconciliation’ approach.</p>
+
+<p>There are a few services where you can find an OpenRefine Reconciliation option available. For example WikiData has a (fledgling) reconciliation service at <a href="https://tools.wmflabs.org/wikidata-reconcile/">https://tools.wmflabs.org/wikidata-reconcile/</a>.</p>
+
+<p>In other cases people have built reconciliation applications for a specific service which you can download and run yourself. These vary in how they work, and what it takes to run them locally. For example there are multiple reconciliation applications for VIAF. Even for the same service (e.g. VIAF) different reconciliation applications (written by different people)  can work in different ways and potentially give different results - so caveat emptor!</p>
+
+<p>One of the most common ways of using the reconciliation option in OpenRefine is with an extension (see below for more on extensions to OpenRefine) can use linked data sources for reconciliation. The extension is called “RDF Refine” and can be downloaded from <a href="http://refine.deri.ie">http://refine.deri.ie</a>.</p>
+
+<p>There also exist extensions to do reconciliation against local data such as csv files (see <a href="http://okfnlabs.org/reconcile-csv/">http://okfnlabs.org/reconcile-csv/</a>) and maintained lists of values (see <a href="http://okfnlabs.org/projects/nomenklatura/index.html">http://okfnlabs.org/projects/nomenklatura/index.html</a>).</p>
+
+<p>For more information on using Reconciliation services see <a href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliation-Service-API">https://github.com/OpenRefine/OpenRefine/wiki/Reconciliation-Service-API</a></p>
+
+<blockquote class="challenge">
+  <h2 id="exercise-12-reconcile-publisher-names-with-viaf-ids">Exercise 12: Reconcile Publisher names with VIAF IDs</h2>
+  <p>In this exercise you are going to use the VIAF Reconciliation service written by <a href="https://twitter.com/absolutelyjeff">Jeff Chiu</a>. Jeff offers two ways of using the reconciliation service - either via a public service he runs at <a href="http://refine.codefork.com/">http://refine.codefork.com/</a>, or by installing and running the service locally using the instructions at <a href="https://github.com/codeforkjeff/refine_viaf">https://github.com/codeforkjeff/refine_viaf</a>.</p>
+
+  <p>If you are going to do a lot of reconciliation, please install and run your own local reconciliation service - the instructions at <a href="https://github.com/codeforkjeff/refine_viaf">https://github.com/codeforkjeff/refine_viaf</a> make this reasonably straightforward.</p>
+
+  <p>Once you have chosen which service you are going to use:</p>
+
+  <ul>
+    <li>In the Publisher column use the dropdown menu to choose ‘Reconcile-&gt;Start Reconciling’</li>
+    <li>If this is the first time you’ve used this particular reconciliation service, you’ll need to add the details of the service now
+      <ul>
+        <li>Click ‘Add Standard Service…’ and in the dialogue that appears enter:
+          <ul>
+            <li>“http://refine.codefork.com/reconcile/viaf” for Jeff’s public service</li>
+            <li>“http://localhost:8080/reconcile/viaf” if you are running the service locally</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>You should now see a heading in the list on the left hand side of the Reconciliation dialogue called “VIAF Reconciliation Service”</li>
+    <li>Click on this to choose to use this reconciliation service</li>
+    <li>In the middle box in the reconciliation dialogue you may get asked what type of ‘entity’ you want to reconcile to - that is, what type of thing are you looking for. The list will vary depending on what reconciliation service you are using.
+      <ul>
+        <li>In this case choose “Corporate Name” (it seems like the VIAF Reconciliation Service is slightly intelligent about this and will only offer options that are relevant)</li>
+      </ul>
+    </li>
+    <li>In the box on the righthand side of the reconciliation dialogue you can choose if other columns are used to help the reconciliation service make a match - however it is sometimes hard to tell what use (if any) the reconciliation service makes of these additional columns</li>
+    <li>At the bottom of the reconciliation dialogue there is the option to “Auto-match candidates with high confidence”. This can be a time saver, but in this case you are going to uncheck it, so you can see the results before a match is made</li>
+    <li>Now click ‘Start Reconciling’</li>
+  </ul>
+
+  <p>Reconciliation is an operation that can take a little time if you have many values to look up. However, in this case there are only 6 publishers to check, so it should work quite quickly.</p>
+
+  <p>Once the reconciliation has completed two Facets should be created automatically:</p>
+  <ul>
+    <li>Publisher: Judgement</li>
+    <li>Publisher: best candidate’s score</li>
+  </ul>
+
+  <p>These are two of several specific reconciliation facets and actions that you can get from the ‘Reconcile’ menu (from the column drop down menu).</p>
+
+  <ul>
+    <li>Close the ‘Publisher: best candidate’s score’ facet, but leave the ‘Publisher: Judgement’ facet open</li>
+  </ul>
+
+  <p>If you look at the Publisher column, you should see some cells have found one or more matches - the potential matches are show in a list in each cell. Next to each potential match there is a ‘tick’ and a ‘double tick’. To accept a reconciliation match you can use the ‘tick’ options in cells. The ‘tick’ accepts the match for the single cell, the ‘double tick’ accepts the match for all identical cells.</p>
+
+  <ul>
+    <li>Create a text facet on the Publisher column</li>
+    <li>Choose ‘International Union of Crystallography’</li>
+  </ul>
+
+  <p>In the Publisher column you should be able to see the various potential matches. Clicking on a match will take you to the VIAF page for that entity.</p>
+
+  <ul>
+    <li>Click a ‘double tick’ in one of the Publisher column cells for the option “International Union of Crystallography”</li>
+    <li>This will accept this as a match for all cells - you should see the other options all disappear</li>
+    <li>Check the ‘Publisher: Judgement’ facet. This should now show that 858 items are ‘matched’ (if this does not update, try refreshing the facets)</li>
+  </ul>
+
+  <p>We could do these one by one, but if we are confident with matches, there is an option to accept all:</p>
+
+  <ul>
+    <li>Remove all filters/facets from the project so all rows display</li>
+    <li>In the Publisher column use the dropdown menu to choose ‘Reconcile-&gt;Actions-&gt;Match each cell to its best candidate’</li>
+  </ul>
+
+  <p>There are two things that reconciliation can do for you. Firstly it gets a standard form of the name or label for the entity. Secondly it gets an ID for the entity - in this case a VIAF id. This is hidden in the default view, but can be extracted:</p>
+
+  <ul>
+    <li>In the Publisher column use the dropdown menu to choose ‘Edit column-&gt;Add column based on this column…’</li>
+    <li>Give the column the name ‘VIAF ID’</li>
+    <li>In the GREL expression box type <code class="highlighter-rouge">cell.recon.match.id</code></li>
+    <li>This will create a new column that contains the VIAF ID for the matched entity</li>
+  </ul>
+</blockquote>
+
+<h2 id="extensions">Extensions</h2>
+<p>The functionality in OpenRefine can be enhanced by ‘extensions’ which can be downloaded and installed to add functionality to your OpenRefine installation.</p>
+
+<p>A list of Extensions (not necessarily complete) is given on the OpenRefine downloads page at <a href="http://openrefine.org/download.html">http://openrefine.org/download.html</a></p>
+
+<p>One of these extensions tries to work around the limitation of Reconciliation services described above, by making it possible to use a reconciliation service against ‘linked data’ sources which have SPARQL endpoints. For more information on this see the ‘RDF Extension’ at <a href="http://refine.deri.ie">http://refine.deri.ie</a>. An example of how this works is given in more detail at <a href="http://refine.deri.ie/showcases">http://refine.deri.ie/showcases</a>.</p>
+
+<h2 id="using-the-cross-function-to-lookup-data-in-other-openrefine-projects">Using the ‘cross’ function to lookup data in other OpenRefine projects</h2>
+<p>As well as looking up data in external systems using the methods described above, it is also possible to look up data in other OpenRefine projects on the same computer. This is done using the ‘cross’ function.</p>
+
+<p>The ‘cross’ function takes a value from the OpenRefine project you are working on, and looks for that value in a column in another OpenRefine project. If it finds one or more matching rows in the second OpenRefine project, it returns an array containing the rows that it has matched.</p>
+
+<p>As it returns the whole row for each match, you can use a transformation to extract the values from any of the columns in the second project.</p>
+
+<p>You can use this function to compare the contents of two OpenRefine projects, or to use data between the two projects.</p>
+
+<p>The <a href="https://www.bits.vib.be/index.php/software-overview/openrefine">VIB-Bits extension</a> adds a number of very useful functions to OpenRefine including a way of using the ‘cross’ function with simply point-and-click functionality which makes looking up data from other projects significantly simpler.</p>
+
+
+<blockquote class="keypoints">
+  <h2>Key Points</h2>
+  <ul>
+    
+    <li><p>OpenRefine can look up custom URLs to fetch data based on what’s in an OpenRefine project</p>
+</li>
+    
+    <li><p>Such API calls can be custom built, or one can use existing Reconciliation services to enrich data</p>
+</li>
+    
+    <li><p>OpenRefine can be further enhanced by installing extensions</p>
+</li>
+    
+  </ul>
+</blockquote>
+
+</article>
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../07-using-transformations/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span><span class="sr-only">lesson home</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+
+      
+      
+<footer>
+  <div class="row">
+    <div class="col-md-6" align="left">
+      <h4>
+	Copyright &copy; 2016–2017
+	
+	<a href="">Library Carpentry</a>
+	
+      </h4>
+    </div>
+    <div class="col-md-6" align="right">
+      <h4>
+	
+	<a href="/edit/gh-pages/_episodes/08-looking-up-data.md">Edit on GitHub</a>
+	
+	/
+	<a href="/blob/gh-pages/CONTRIBUTING.md">Contributing</a>
+	/
+	<a href="/">Source</a>
+	/
+	<a href="/blob/gh-pages/CITATION">Cite</a>
+	/
+	<a href="https://gitter.im/weaverbel/LibraryCarpentry">Contact</a>
+      </h4>
+    </div>
+  </div>
+</footer>
+
+      
+    </div>
+    
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/lesson.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-37305346-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
